@@ -77,6 +77,7 @@ class _AppState extends State<App> {
         headerSliverBuilder: (context,isInner){
           return [
             SliverAppBar(
+              automaticallyImplyLeading: false,
               pinned: true,
               backgroundColor: Colors.white,
               collapsedHeight: 75,
@@ -125,6 +126,7 @@ class _AppState extends State<App> {
               elevation: 0,
             ),
             SliverAppBar(
+              automaticallyImplyLeading: false,
               expandedHeight: 150,
               backgroundColor: Colors.white,
               flexibleSpace: FlexibleSpaceBar(

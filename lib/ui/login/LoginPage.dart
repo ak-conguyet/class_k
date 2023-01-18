@@ -1,8 +1,11 @@
 import 'package:class_k/Component/CustomTextField.dart';
 import 'package:class_k/Component/EmailField.dart';
 import 'package:class_k/Component/PasswordField.dart';
+import 'package:class_k/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../../Utils/Utils.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -73,7 +76,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         Icon(Icons.arrow_forward_rounded,size: 35,)
                       ],
                     ),
-                    onPressed: (){},
+                    onPressed: (){
+                      startActivityAndFinishCurrent(context,App());
+                    },
                   ),
                 )
               ],

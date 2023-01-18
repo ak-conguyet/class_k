@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:progress_indicators/progress_indicators.dart';
+import 'package:class_k/Component/LodingWG.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -20,10 +21,10 @@ class HomePage extends StatelessWidget {
       builder: (context,state){
         if(state is Home_initical_state){
           _bloc.add(Home_request());
-          return JumpingDotsProgressIndicator(fontSize: 20,);
+          return LoadingWG();
         }
         if(state is Home_loading_state){
-          return JumpingDotsProgressIndicator(fontSize: 20,);
+          return LoadingWG();
         }
 
         if(state is Home_failure_state){

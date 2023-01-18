@@ -1,6 +1,7 @@
 import 'package:class_k/Constans/KColors.dart';
 import 'package:class_k/ui/account/Account_Page.dart';
 import 'package:class_k/ui/class/Class_Page.dart';
+import 'package:class_k/ui/class/bloc/Class_Bloc.dart';
 import 'package:class_k/ui/home/Home_Page.dart';
 import 'package:class_k/ui/home/bloc/Home_bloc.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         ),
         home: MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context)=> HomeBloc())
+            BlocProvider(create: (context)=> HomeBloc()),
+            BlocProvider(create: (context)=> ClassBloc())
           ],
           child: const App(),
         )

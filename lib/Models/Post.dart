@@ -4,12 +4,14 @@ class Post {
   final String title;
   final String content;
   final String time;
+  final List<String>? images;
 
   const Post({
     required this.uid,
     required this.title,
     required this.content,
-    required this.time
+    required this.time,
+    this.images
 });
 
 }

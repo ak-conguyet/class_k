@@ -1,3 +1,4 @@
+import 'package:class_k/Constans/KColors.dart';
 import 'package:class_k/ui/account/Account_Page.dart';
 import 'package:class_k/ui/class/Class_Page.dart';
 import 'package:class_k/ui/home/Home_Page.dart';
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
         title: 'Class K',
         debugShowCheckedModeBanner: false,
         theme: ThemeData.from(
-            colorScheme: const ColorScheme.light(),
+            colorScheme: ColorScheme.light(
+              primary: KColors.primary,
+              secondary: KColors.secondary
+            ),
             textTheme: ThemeData.light().textTheme.apply(
                 fontFamily: 'OpenSans'
             )
@@ -58,10 +62,6 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0,keepPage: true);
-    _pageController.addListener(() {
-      _currentIndex = _pageController.page!.toInt();
-      setState(() {});
-    });
   }
 
   @override
@@ -69,49 +69,57 @@ class _AppState extends State<App> {
     return Scaffold(
       body: NestedScrollView(
         //physics: const NeverScrollableScrollPhysics(),
-        headerSliverBuilder: (context,isInner) => [
-          SliverAppBar(
-            pinned: true,
-            backgroundColor: Colors.white,
-            collapsedHeight: 75,
-            flexibleSpace: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top, left: 20, right: 20),
-              child: Center(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      child: Image.network(
-                        'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const Spacer(),
-                    Badge(
-                      child: GestureDetector(
-                        child: Icon(
-                          Iconsax.notification,
-                          size: 30,
+        headerSliverBuilder: (context,isInner){
+          return [
+            SliverAppBar(
+              pinned: true,
+              backgroundColor: Colors.white,
+              collapsedHeight: 75,
+              flexibleSpace: Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top, left: 20, right: 20),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(Radius.circular(15)),
+                        child: Image.network(
+                          'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      badgeContent: const Text(
-                        '3',
+                      Text(
+                          isInner ? 'Rohan' : '',
                         style: TextStyle(
-                            color: Colors.white
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
-                    )
-                  ],
+                      Badge(
+                        child: GestureDetector(
+                          child: Icon(
+                            Iconsax.notification,
+                            size: 30,
+                          ),
+                        ),
+                        badgeContent: const Text(
+                          '3',
+                          style: TextStyle(
+                              color: Colors.white
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
+              elevation: 0,
             ),
-            elevation: 0,
-          ),
-          SliverAppBar(
+            SliverAppBar(
               expandedHeight: 150,
               backgroundColor: Colors.white,
               flexibleSpace: FlexibleSpaceBar(
@@ -139,37 +147,40 @@ class _AppState extends State<App> {
                 ),
                 collapseMode: CollapseMode.pin,
               ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.2),
-                    borderRadius:const BorderRadius.all(Radius.circular(15))
-                ),
-                child: TextFormField(
-                  maxLines: 1,
-                  decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Type something',
-                      prefixIcon: Icon(Iconsax.search_normal)
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.2),
+                      borderRadius:const BorderRadius.all(Radius.circular(15))
                   ),
-                  textInputAction: TextInputAction.search,
+                  child: TextFormField(
+                    maxLines: 1,
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Type something',
+                        prefixIcon: Icon(Iconsax.search_normal)
+                    ),
+                    textInputAction: TextInputAction.search,
+                  ),
                 ),
               ),
             ),
-          ),
-
-        ],
+          ];
+        },
         body: PageView(
           controller: _pageController,
-          physics: const BouncingScrollPhysics(),
+          physics:const NeverScrollableScrollPhysics(),
           children: _pages,
         ),
       ),
       bottomNavigationBar: CustomNavigationBar(
+          strokeColor: KColors.secondaryS,
+          selectedColor: KColors.primary,
+          unSelectedColor: KColors.secondary,
           items: [
             CustomNavigationBarItem(icon: const Icon(Iconsax.home)),
             CustomNavigationBarItem(icon: const Icon(Iconsax.book)),
@@ -183,5 +194,8 @@ class _AppState extends State<App> {
   
   void navTap(int index){
     _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }

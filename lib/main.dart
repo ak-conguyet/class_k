@@ -1,9 +1,11 @@
 import 'package:class_k/Constans/KColors.dart';
+import 'package:class_k/Utils/Utils.dart';
 import 'package:class_k/ui/account/Account_Page.dart';
 import 'package:class_k/ui/class/Class_Page.dart';
 import 'package:class_k/ui/class/bloc/Class_Bloc.dart';
 import 'package:class_k/ui/home/Home_Page.dart';
 import 'package:class_k/ui/home/bloc/Home_bloc.dart';
+import 'package:class_k/ui/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/services.dart';
@@ -30,18 +32,19 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.from(
             colorScheme: ColorScheme.light(
               primary: KColors.primary,
-              secondary: KColors.secondary
+              secondary: KColors.secondary,
             ),
             textTheme: ThemeData.light().textTheme.apply(
                 fontFamily: 'OpenSans'
-            )
+            ),
+          useMaterial3: true
         ),
         home: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context)=> HomeBloc()),
             BlocProvider(create: (context)=> ClassBloc())
           ],
-          child: const App(),
+          child:  LoginPage(),
         )
     );
   }
@@ -195,6 +198,11 @@ class _AppState extends State<App> {
   }
   
   void navTap(int index){
+    if(index == 2){
+      // Navigator.push(context, MaterialPageRoute(builder: (_)=>AccountPage()));
+      startActivity(context, AccountPage());
+      return;
+    }
     _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.linear);
     setState(() {
       _currentIndex = index;

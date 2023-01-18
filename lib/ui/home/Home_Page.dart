@@ -6,7 +6,6 @@ import 'package:class_k/ui/home/bloc/Home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:class_k/Component/LodingWG.dart';
 
 class HomePage extends StatelessWidget {

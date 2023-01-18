@@ -10,7 +10,7 @@ import 'package:lottie/lottie.dart';
 
 class ClassPage extends StatelessWidget {
   ClassPage({Key? key}) : super(key: key);
-  ClassBloc _bloc = ClassBloc();
+  final ClassBloc _bloc = ClassBloc();
 
   final List<String> _lotties = ['98849-book-lover.json','101088-kids-studying-from-home.json','101546-study-abroad.json','101674-science-lover.json'];
 
@@ -48,47 +48,49 @@ class ClassPage extends StatelessWidget {
               )
             ),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding:const EdgeInsets.symmetric(vertical: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          state.classRoom[index].name,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
+          child: InkWell(
+            onTap: (){},
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding:const EdgeInsets.symmetric(vertical: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
                           child: Text(
-                            'Tern: ${state.classRoom[index].term}\bLecturers: ${state.classRoom[index].lecturers}'
+                            state.classRoom[index].name,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold
+                            ),
                           ),
                         ),
-                      )
-                    ],
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Tern: ${state.classRoom[index].term}\bLecturers: ${state.classRoom[index].lecturers}'
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child:
-                Lottie.asset('lotties/${_lotties[index]}'),
-              )
-            ],
+                Expanded(
+                  flex: 1,
+                  child:
+                  Lottie.asset('lotties/${_lotties[index]}'),
+                )
+              ],
+            ),
           ),
         ),
       );
     }
-
     return FailureWG();
   }
 }

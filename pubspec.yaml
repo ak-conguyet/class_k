@@ -41,7 +41,6 @@ dependencies:
   badges: ^2.0.3
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
-  progress_indicators: ^1.0.0
   pull_to_refresh: ^2.0.0
   insta_image_viewer: ^1.0.2
   lottie: ^2.2.0

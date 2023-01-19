@@ -1,10 +1,13 @@
+import 'package:class_k/Component/CustomButton.dart';
 import 'package:class_k/Component/CustomTextField.dart';
 import 'package:class_k/Component/EmailField.dart';
 import 'package:class_k/Component/PasswordField.dart';
+import 'package:class_k/Component/Style.dart';
 import 'package:class_k/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../Component/LoadingAnimation.dart';
 import '../../Utils/Utils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,6 +26,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -63,24 +67,26 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 SizedBox(height: 50,),
                 SizedBox(
                   height: 50,
-                  child: ElevatedButton(
+                  child:ElevatedButton(
+                    style: CustomButtonStyle(),
+                    onPressed: (){
+                      startActivityAndFinishCurrent(context,const App());
+                    },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: const [
                         Text(
-                            'Get started',
+                          'Get started',
                           style: TextStyle(
-                            fontSize: 20
+                              fontSize: 20
                           ),
                         ),
                         Icon(Icons.arrow_forward_rounded,size: 35,)
                       ],
                     ),
-                    onPressed: (){
-                      startActivityAndFinishCurrent(context,App());
-                    },
                   ),
-                )
+                ),
+                const SizedBox(height: 100,),
               ],
             ),
           ),

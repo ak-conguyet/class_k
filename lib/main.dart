@@ -1,3 +1,4 @@
+import 'package:class_k/Component/LoadingAnimation.dart';
 import 'package:class_k/Constans/KColors.dart';
 import 'package:class_k/Utils/Utils.dart';
 import 'package:class_k/ui/account/Account_Page.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context)=> HomeBloc()),
             BlocProvider(create: (context)=> ClassBloc())
           ],
-          child:  LoginPage(),
+          child:  LoginPage()
         )
     );
   }

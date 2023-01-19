@@ -1,5 +1,5 @@
 
+import 'package:class_k/Component/LoadingAnimation.dart';
 import 'package:flutter/material.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 
-Widget LoadingWG() => JumpingDotsProgressIndicator(fontSize: 100,);
+Widget LoadingWG() => const Center(child: LoadingAnimation());

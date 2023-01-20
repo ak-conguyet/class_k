@@ -34,6 +34,13 @@ class _LoadingAnimationState extends State<LoadingAnimation> with SingleTickerPr
     widget.loop ? _animationController.repeat(reverse: true) : _animationController.forward() ;
   }
 
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(

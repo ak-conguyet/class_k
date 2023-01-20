@@ -7,6 +7,7 @@ import 'package:class_k/ui/class/bloc/Class_Bloc.dart';
 import 'package:class_k/ui/home/Home_Page.dart';
 import 'package:class_k/ui/home/bloc/Home_bloc.dart';
 import 'package:class_k/ui/login/LoginPage.dart';
+import 'package:class_k/ui/login/bloc/Login_Bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/services.dart';
@@ -43,9 +44,10 @@ class MyApp extends StatelessWidget {
         home: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context)=> HomeBloc()),
-            BlocProvider(create: (context)=> ClassBloc())
+            BlocProvider(create: (context)=> ClassBloc()),
+            BlocProvider(create: (context)=> LoginBloc())
           ],
-          child:  LoginPage()
+          child:  LoginPage(bloc: LoginBloc(),)
         )
     );
   }
@@ -59,7 +61,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final List<Widget> _pages =  [HomePage(), ClassPage(), AccountPage()];
+  final List<Widget> _pages =  [HomePage(bloc: HomeBloc(),), ClassPage(bloc: ClassBloc(),), AccountPage()];
   int _currentIndex = 0;
   late PageController _pageController;
 

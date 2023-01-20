@@ -1,48 +1,14 @@
-
+import 'package:class_k/Component/CustomBloc.dart';
 import 'package:class_k/Models/Post.dart';
 import 'package:class_k/ui/home/bloc/Home_Event.dart';
 import 'package:class_k/ui/home/bloc/Home_State.dart';
 import 'package:class_k/ui/home/bloc/Home_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:class_k/Component/LodingWG.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
-  final HomeBloc _bloc = HomeBloc();
-  late BuildContext ct;
-  @override
-  Widget build(BuildContext context) {
-    ct = context;
-    return BlocBuilder<HomeBloc,HomeState>(
-      bloc: _bloc,
-      builder: (context,state){
-        if(state is Home_initical_state){
-          _bloc.add(Home_request());
-          return LoadingWG();
-        }
-        if(state is Home_loading_state){
-          return LoadingWG();
-        }
-
-        if(state is Home_failure_state){
-          return const Center(
-            child: Text(
-              'failure'
-            ),
-          );
-        }
-        List<Post> posts = (state as Home_successful_state).post;
-        return ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.zero,
-            itemCount: posts.length,
-            itemBuilder: (context, index) => _itemBuider(posts[index])
-        );
-      },
-    );
-  }
+class HomePage extends CustomBloc<HomeBloc,HomeState>  {
+  HomePage({super.key,required super.bloc});
 
   Widget _itemBuider(Post posts) => InkWell(
     child: Container(
@@ -146,4 +112,36 @@ class HomePage extends StatelessWidget {
         ),
       );
   }
+
+  @override
+  Widget stateBuilder(HomeState state) {
+    if(state is Home_initical_state){
+      bloc.add(Home_request());
+      return LoadingWG();
+    }
+    if(state is Home_loading_state){
+      return LoadingWG();
+    }
+    if(state is Home_failure_state){
+      return const Center(
+        child: Text(
+            'failure'
+        ),
+      );
+    }
+    List<Post> posts = (state as Home_successful_state).post;
+    return ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        padding: EdgeInsets.zero,
+        itemCount: posts.length,
+        itemBuilder: (context, index) => _itemBuider(posts[index])
+    );
+  }
+
+  @override
+  void listener(BuildContext context, HomeState state) {
+    // TODO: implement listener
+  }
+  
+
 }

@@ -1,3 +1,4 @@
+import 'package:class_k/Component/CustomSliverHeaderAppbar.dart';
 import 'package:flutter/material.dart';
 
 class AccountPage extends StatelessWidget {
@@ -5,35 +6,18 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(25)),
-                child: Image.network(
-                  'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              _paddingBuider(
-                child: Text(
-                  'Rohan Krishnan',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
+    return CustomScrollView(
+      slivers: [
+        SliverPersistentHeader(
+          delegate: Customsliverheaderappbar(
+              childBuilder: (BuildContext context, double shrinkOffset, bool overlapsContent) {
+                return Container(
+                  color: Colors.blue,
+                );
+              }
           ),
-        ),
-      ),
+        )
+      ],
     );
   }
 

@@ -3,8 +3,8 @@ import 'package:iconsax/iconsax.dart';
 import 'CustomTextField.dart';
 
 class PasswordField extends StatefulWidget {
-  const PasswordField({Key? key}) : super(key: key);
-
+  const PasswordField({Key? key, this.controller}) : super(key: key);
+  final TextEditingController? controller;
   @override
   State<PasswordField> createState() => _PasswordFieldState();
 }
@@ -16,6 +16,7 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
+      controller: widget.controller,
       hintText: 'Password',
       obscureText: !_isVisiable,
       suffixIcon: GestureDetector(

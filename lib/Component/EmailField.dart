@@ -2,8 +2,8 @@ import 'package:class_k/Component/CustomTextField.dart';
 import 'package:flutter/material.dart';
 
 class EmailField extends StatefulWidget {
-  const EmailField({Key? key}) : super(key: key);
-
+  const EmailField({Key? key, this.controller}) : super(key: key);
+  final TextEditingController? controller;
   @override
   State<EmailField> createState() => _EmailFieldState();
 }
@@ -15,6 +15,7 @@ class _EmailFieldState extends State<EmailField> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
+      controller: widget.controller,
       hintText: 'Email',
       inputType: TextInputType.emailAddress,
       onChange: (value){

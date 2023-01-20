@@ -1,32 +1,30 @@
-import 'package:class_k/Component/CustomButton.dart';
-import 'package:class_k/Component/CustomTextField.dart';
+import 'package:class_k/Component/CustomBloc.dart';
 import 'package:class_k/Component/EmailField.dart';
+import 'package:class_k/Component/LodingWG.dart';
 import 'package:class_k/Component/PasswordField.dart';
 import 'package:class_k/Component/Style.dart';
 import 'package:class_k/main.dart';
+import 'package:class_k/ui/login/bloc/Login_Bloc.dart';
+import 'package:class_k/ui/login/bloc/Login_Event.dart';
+import 'package:class_k/ui/login/bloc/Login_State.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../Component/LoadingAnimation.dart';
 import '../../Utils/Utils.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPage extends CustomBloc<LoginBloc,Login_State> {
+  LoginPage({super.key, required super.bloc});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
-
-  @override
-  Widget build(BuildContext context) {
+  Widget buildContent() {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark));
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -61,16 +59,20 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     ],
                   ),
                 ),
-                EmailField(),
+                EmailField(
+                  controller: _emailController,
+                ),
                 SizedBox(height: 30,),
-                PasswordField(),
+                PasswordField(
+                  controller: _passController,
+                ),
                 SizedBox(height: 50,),
                 SizedBox(
                   height: 50,
                   child:ElevatedButton(
                     style: CustomButtonStyle(),
                     onPressed: (){
-                      startActivityAndFinishCurrent(context,const App());
+                      bloc.add(Login_request(_emailController.text, _passController.text));
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -78,7 +80,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         Text(
                           'Get started',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 20,
+                            fontWeight: FontWeight.bold
                           ),
                         ),
                         Icon(Icons.arrow_forward_rounded,size: 35,)
@@ -93,6 +96,43 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         ),
       )
     );
+  }
+  
+  @override
+  Widget stateBuilder(Login_State state) {
+    if(state is Login_loading){
+      return LoadingWG();
+    }
+
+    if(state is Login_success){
+      return LoadingWG();
+    }
+
+    if(state is Login_failure){
+      return _failureBuild(state.text);
+    }
+
+    return buildContent();
+  }
+
+  Widget _failureBuild(String value)=>Scaffold(
+    body: Center(
+      child: Text(
+        value
+      ),
+    ),
+  );
+
+  @override
+  void listener(BuildContext context, Login_State state) {
+    if(state is Login_success){
+      startActivityAndFinishCurrent(context,const App());
+    }
+  }
+
+  @override
+  bool listennerWhen(Login_State state) {
+    return true;
   }
 }
 

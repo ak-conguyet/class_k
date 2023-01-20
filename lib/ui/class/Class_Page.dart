@@ -5,27 +5,19 @@ import 'package:class_k/ui/class/bloc/Class_Bloc.dart';
 import 'package:class_k/ui/class/bloc/Class_Event.dart';
 import 'package:class_k/ui/class/bloc/Class_State.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import '../../Component/CustomBloc.dart';
 
-class ClassPage extends StatelessWidget {
-  ClassPage({Key? key}) : super(key: key);
-  final ClassBloc _bloc = ClassBloc();
+class ClassPage extends CustomBloc<ClassBloc,ClassState>{
 
   final List<String> _lotties = ['98849-book-lover.json','101088-kids-studying-from-home.json','101546-study-abroad.json','101674-science-lover.json'];
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ClassBloc,ClassState>(
-      bloc: _bloc,
-      builder: (context, state)
-      => _bodyBuilder(state),
-    );
-  }
+  ClassPage({super.key, required super.bloc});
 
-  Widget _bodyBuilder(ClassState state){
+  @override
+  Widget stateBuilder(ClassState state) {
     if(state is Class_initical_state){
-      _bloc.add(Class_request());
+      bloc.add(Class_request());
       return LoadingWG();
     }
     if(state is Class_loading_state){
@@ -42,10 +34,10 @@ class ClassPage extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
-              bottom: BorderSide(
-                color: KColors.primary,
-                width: 0.5
-              )
+                bottom: BorderSide(
+                    color: KColors.primary,
+                    width: 0.5
+                )
             ),
           ),
           child: InkWell(
@@ -72,7 +64,7 @@ class ClassPage extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Tern: ${state.classRoom[index].term}\bLecturers: ${state.classRoom[index].lecturers}'
+                                'Tern: ${state.classRoom[index].term}\bLecturers: ${state.classRoom[index].lecturers}'
                             ),
                           ),
                         )
@@ -93,4 +85,15 @@ class ClassPage extends StatelessWidget {
     }
     return FailureWG();
   }
+
+  @override
+  void listener(BuildContext context, ClassState state) {
+    // TODO: implement listener
+  }
+
+
+
+
+
+
 }
